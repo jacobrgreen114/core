@@ -1,5 +1,5 @@
 
-// Copyright (c) 2022. Jacob R. Green
+// Copyright (c) 2023 Jacob R. Green
 // All Rights Reserved.
 
 #pragma once
@@ -16,10 +16,10 @@
 #error Unknown operating system
 #endif
 
-#if defined(__amd64__) || defined(__amd64) || defined(__x86_64__) ||           \
+#if defined(__amd64__) || defined(__amd64) || defined(__x86_64__) || \
     defined(__x86_64) || defined(_M_X64) || defined(_M_AMD64)
 #define ARCH_X64 1
-#elif defined(i386) || defined(__i386) || defined(__i386__) ||                 \
+#elif defined(i386) || defined(__i386) || defined(__i386__) || \
     defined(_M_I86) || defined(_M_IX86)
 #define ARCH_X86 1
 #elif defined(__aARCh64__)
@@ -45,7 +45,7 @@
 #elif defined(__BIG_ENDIAN__) || defined(__ARMEB__)
 #define ENDIAN_BIG 1
 #else
-//#error Unknown endianness
+// #error Unknown endianness
 #endif
 
 #if defined(__clang__)
@@ -58,14 +58,19 @@
 #error Unknown compiler
 #endif
 
-#if OS_WINDOWS
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#endif
+#include <filesystem>
+namespace fs = std::filesystem;
+#include <chrono>
+namespace chrono = std::chrono;
 
-#include <fstream>
-#include <future>
-#include <iostream>
-#include <mutex>
-#include <semaphore>
-#include <thread>
+#include <cassert>
+
+namespace muchcool {
+
+template <typename T>
+constexpr auto deref(T ptr) {
+  assert(ptr);
+  return *ptr;
+}
+
+}  // namespace muchcool

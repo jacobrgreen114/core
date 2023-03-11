@@ -1,10 +1,15 @@
 
+// Copyright (c) 2023 Jacob R. Green
+// All Rights Reserved.
+
 #pragma once
 
 #include <cstdint>
 #include <memory>
 
-#include "Platform.hpp"
+#include "common.hpp"
+
+namespace muchcool {
 
 using uint8 = uint8_t;
 using uint16 = uint16_t;
@@ -17,11 +22,13 @@ using int32 = int32_t;
 using int64 = int64_t;
 
 #if WORD_SIZE == 32
-using uintn = uint32;
-using intn = int32;
+using uword = uint32;
+using iword = int32;
 #elif WORD_SIZE == 64
-using uintn = uint64;
-using intn = int64;
+using uword = uint64;
+using iword = int64;
 #endif
 
 #define null nullptr
+
+}  // namespace muchcool

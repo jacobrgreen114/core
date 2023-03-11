@@ -1,24 +1,26 @@
 
-// Copyright (c) 2022. Jacob R. Green
+// Copyright (c) 2023 Jacob R. Green
 // All Rights Reserved.
 
 #pragma once
 
-#include "Datatypes.hpp"
+#include "datatypes.hpp"
 
 #include <chrono>
+
+namespace muchcool {
 
 using Clock = std::chrono::high_resolution_clock;
 
 class Timer final {
   Clock::time_point _startTime;
 
-public:
+ public:
   Timer();
 
-  void Reset();
+  void reset();
 
-  double ElapsedTime() const;
+  double elapsed() const;
 };
 
 using ScopedTimerCallback = void (*)(const char*, double);
@@ -28,7 +30,7 @@ class ScopedTimer {
   const char* _name;
   ScopedTimerCallback _callback;
 
-public:
+ public:
   ScopedTimer(const char* name, ScopedTimerCallback callback);
   ~ScopedTimer();
 };
@@ -69,11 +71,13 @@ class DateTime {
   uint16 _millisecond;
   uint64 _ticks;
 
-public:
+ public:
   DateTime(uint16 year = {}, Month month = Month::January,
            DayOfWeek dayOfWeek = DayOfWeek::Sunday, uint16 day = {},
            uint16 hour = {}, uint16 minute = {}, uint16 second = {},
            uint16 milli = {}, uint64 ticks = {});
 
-  static DateTime Now();
+  static DateTime now();
 };
+
+}  // namespace muchcool

@@ -3,12 +3,12 @@
 
 #pragma once
 
-#include "core/ArcObject.hpp"
-#include "core/Array.hpp"
-#include "core/Collections.hpp"
-#include "core/Datatypes.hpp"
-#include "core/Delegate.hpp"
-#include "core/Event.hpp"
-#include "core/List.hpp"
-#include "core/Platform.hpp"
-#include "core/Timers.hpp"
+#include "core/common.hpp"
+#include "core/object.hpp"
+#include "core/array.hpp"
+#include "core/collections.hpp"
+#include "core/datatypes.hpp"
+#include "core/delegate.hpp"
+#include "core/event.hpp"
+#include "core/list.hpp"
+#include "core/timers.hpp"

@@ -1,30 +1,33 @@
-// Copyright (c) 2022-2023 Jacob R. Green
+// Copyright (c) 2023 Jacob R. Green
 // All Rights Reserved.
 
 #pragma once
 
-#include "ArcObject.hpp"
+#include "object.hpp"
+
+namespace muchcool {
 
 template <typename Ret, typename... Args>
 class Delegate : public virtual Object {
-public:
+ public:
   using StaticMethod = Ret (*)(Args...);
 
-  template <typename T> using MemberMethod = Ret (T::*)(Args...);
+  template <typename T>
+  using MemberMethod = Ret (T::*)(Args...);
 
-protected:
+ protected:
   Delegate() = default;
 
-public:
+ public:
   virtual Ret Invoke(Args... args) = 0;
 
   Ret operator()(Args... args) { return Invoke(std::forward<Args>(args)...); }
 
-private:
+ private:
   class Static : public Delegate {
     StaticMethod _method;
 
-  public:
+   public:
     Static(StaticMethod method) : _method(method) {}
     ~Static() override = default;
 
@@ -33,12 +36,13 @@ private:
     }
   };
 
-  template <typename T> class Member : public Delegate {
-    Pointer<T> _obj;
+  template <typename T>
+  class Member : public Delegate {
+    Shared<T> _obj;
     MemberMethod<T> _method;
 
-  public:
-    Member(T *obj, MemberMethod<T> method) : _obj(obj), _method(method) {}
+   public:
+    Member(T* obj, MemberMethod<T> method) : _obj(obj), _method(method) {}
     ~Member() override = default;
 
     Ret Invoke(Args... args) override {
@@ -46,11 +50,13 @@ private:
     }
   };
 
-public:
-  static Delegate *New(StaticMethod method) { return new Static(); }
+ public:
+  static Delegate* New(StaticMethod method) { return new Static(); }
 
   template <typename T>
-  static Delegate *NewMember(T *obj, MemberMethod<T> method) {
+  static Delegate* NewMember(T* obj, MemberMethod<T> method) {
     return new Member<T>(obj, method);
   }
 };
+
+}  // namespace muchcool

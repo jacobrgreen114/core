@@ -4,7 +4,7 @@
 
 add_library(core
         src/core.cpp
-        src/Timers.cpp
+        src/timers.cpp
 )
 
 target_include_directories(core
@@ -13,17 +13,53 @@ target_include_directories(core
 )
 
 target_precompile_headers(core
-    PUBLIC
-        <string_view>
-        <string>
+        PUBLIC
+        <typeinfo>
+
         <span>
+
+        <string>
+        <string_view>
+
         <array>
         <vector>
+
+        <set>
+        <unordered_set>
+
+        <map>
+        <unordered_map>
+
         <algorithm>
+
+        <chrono>
+        <filesystem>
         <iostream>
         <fstream>
-        <unordered_map>
-        <map>
-        <Windows.h>
 
+        <future>
+        <atomic>
+        <thread>
+        <mutex>
+        <latch>
+        <barrier>
+        <semaphore>
 )
+
+
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+    target_precompile_headers(core
+        PUBLIC
+            <Windows.h>
+    )
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    message(FATAL_ERROR "MacOS is not currently supported")
+else()
+    message(FATAL_ERROR "Unsupported system ${CMAKE_SYSTEM_NAME}")
+endif()
+
+
+
+
