@@ -61,5 +61,6 @@ else()
 endif()
 
 
+install(TARGETS core)
 
 
